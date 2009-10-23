@@ -1,7 +1,4 @@
-if (typeof load !== 'undefined') {
-  load('riot/riot.js');
-  load('../closure.js');
-}
+load('test_helper.js');
 
 Riot.context('Enumerable', function() {
   given('an array', function() {
@@ -17,7 +14,13 @@ Riot.context('Enumerable', function() {
       return b;
     }).equals(5);
   });
+
+  given('a property list', function() {
+    var list = { first: '1', second: '2' };
+    should('collect items', Closure.Enumerable.map(Closure.Enumerable.toArray(list), function(n) {
+      return n[0] + n[1];
+    }).toString()).equals('first1,second2');
+  });
 });
 
 Riot.run();
-

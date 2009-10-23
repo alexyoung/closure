@@ -1,8 +1,5 @@
-if (typeof load !== 'undefined') {
-  load('riot/riot.js');
-  load('../closure.js');
-  load('fixtures/example_classes.js');
-}
+load('test_helper.js');
+load('fixtures/example_classes.js');
 
 Riot.context('Class', function() {
   given('a class with no initializer', function() {

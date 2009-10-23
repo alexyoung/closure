@@ -18,8 +18,16 @@ Closure.Enumerable = {
 
   map: function(enumerable, callback) {
     var newArray = [];
-    for (var i, next = Closure.Enumerable.iterate(enumerable); i = next();) {
-      newArray.push(callback(i));
+    Closure.Enumerable.each(enumerable, function(value) {
+      newArray.push(callback(value));
+    });
+    return newArray;
+  },
+
+  toArray: function(obj) {
+    var newArray = [];
+    for (var key in obj) {
+      newArray.push([key, obj[key]]);
     }
     return newArray;
   }
