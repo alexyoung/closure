@@ -2,6 +2,31 @@ var Closure = {
   VERSION: '0.0.1'
 };
 
+/* Enumerable */
+Closure.Enumerable = {
+  iterate: function(iterator) {
+    var i      = -1,
+        getter = function() { return i < 0 ? null : (i < iterator.length ? iterator[i] : null); };
+    return function() { return ++i < iterator.length ? getter() : null };
+  },
+
+  each: function(enumerable, callback) {
+    for (var i, next = Closure.Enumerable.iterate(enumerable); i = next();) {
+      callback(i);
+    }
+  },
+
+  map: function(enumerable, callback) {
+    var newArray = [];
+    for (var i, next = Closure.Enumerable.iterate(enumerable); i = next();) {
+      newArray.push(callback(i));
+    }
+    return newArray;
+  }
+};
+Closure.Enumerable.collect = Closure.Enumerable.map;
+
+/* Classes */
 Closure.Class = {
   create: function() {
     var methods = null,
