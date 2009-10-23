@@ -1,0 +1,1 @@
+A JavaScript library for simple OO and functional programming.
