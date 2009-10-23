@@ -5,7 +5,8 @@ var Closure = {
 Closure.Class = {
   create: function() {
     var methods = null,
-        parent  = undefined;
+        parent  = undefined,
+        klass   = function() { this.initialize.apply(this, arguments); };
 
     if (typeof arguments[0] === 'function') {
       parent = arguments[0];
@@ -13,8 +14,6 @@ Closure.Class = {
     } else {
       methods = arguments[0];
     }
-
-    function klass() { this.initialize.apply(this, arguments); };
 
     if (typeof parent !== 'undefined')
       Closure.Class.extend(klass.prototype, parent.prototype);
