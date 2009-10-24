@@ -20,6 +20,7 @@ Riot.context('Sequence', function() {
     }).toString()).equals('2,3,4,5,6');
 
     should('tail array', seq.tail(2).toArray().toString()).equals('4,5');
+    should('tail array twice', seq.tail(3).tail(2).take(1).toString()).equals('4');
     should('take n items', seq.take(2).toString()).equals('1,2');
     should('find items with contains', seq.contains(2)).equals(2);
     should('not match non-existant items with contains', seq.contains(99)).isTypeOf('undefined');
