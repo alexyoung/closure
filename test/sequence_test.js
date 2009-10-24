@@ -1,15 +1,7 @@
 load('test_helper.js');
 
 Riot.context('Sequence', function() {
-  /*given('an iterator', function() {
-    var iterator = new Closure.Iterator(function(x) { return x + 1; }),
-        seq      = new Closure.Sequence(iterator);
 
-    should('take take values', seq.take(5).toString()).equals('1,2,3,4,5');
-    //should('return the first value', seq.first().toString()).equals('1');
-    //should('take values then tail', seq.take(100).tail(1).toString()).equals('100');
-  });
-  */
   given('an array iterator', function() {
     var iterator = new Closure.Iterator([3, 6, 9, 12, 15]);
     should('return expected values', iterator.next()).equals(3);
@@ -25,6 +17,7 @@ Riot.context('Sequence', function() {
   given('a sequence that uses an iterator', function() {
     var seq = new Closure.Sequence(function(x, i) { return i * 2; });
     should('take values from the sequence', seq.take(3).toString()).equals('0,2,4');
+    should('take values then tail', seq.take(100).tail(1).toString()).equals('198');
   });
 
   given('an array', function() {
@@ -59,6 +52,7 @@ Riot.context('Sequence', function() {
     should('take then remove items', seq.take(3).remove(1).toString()).equals('2,3');
     should('tail then remove items', seq.tail(3).remove(4).toString()).equals('3,5');
   });
+
 });
 
 Riot.run();

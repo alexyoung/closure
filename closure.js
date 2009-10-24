@@ -166,7 +166,7 @@ Closure.Sequence = Closure.Class.create({
 
   tail: function(n) {
     var seq = this.clone();
-    seq.start = seq.items.length - n;
+    seq.start = this.end - n;
     return seq;
   },
 
