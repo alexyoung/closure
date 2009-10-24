@@ -50,8 +50,53 @@ Closure.Class = {
 };
 
 /* Sequences */
+Closure.Iterator = Closure.Class.create({
+  initialize: function(iterator) {
+    this.reset();
+    this.setIterator(iterator);
+  },
+
+  setIterator: function(iterator) {
+    if (typeof iterator !== 'undefined') {
+      if (typeof iterator === 'function') {
+        this.iterator = iterator;
+      } else {
+        this.iterator = function(v, i) { return iterator[i]; };
+      }
+    }
+  },
+
+  next: function() {
+    this.last = this.iterator(this.last, this.index);
+    this.index++;
+    return this.last;
+  },
+
+  reset: function() {
+    this.last  = 0;
+    this.index = 0;
+  },
+
+  slice: function(start, end) {
+    var values = [];
+    for (var i = 0; i < start; i++) {
+      this.next();
+    }
+    for (var i = start; i < end; i++) {
+      values.push(this.next());
+    }
+    this.last  = 0;
+    this.index = 0;
+    return values;
+  }
+});
+
 Closure.Sequence = Closure.Class.create({
   initialize: function(items) {
+    if (typeof items === 'function') {
+      items = new Closure.Iterator(items);
+    }
+
     this.start     = 0;
     this.end       = items.length;
     this.items     = items;
@@ -83,6 +128,10 @@ Closure.Sequence = Closure.Class.create({
   },
 
   iterate: function() {
+    if (this.iterator) {
+      return function () { return this.iterator.next() };
+    }
+
     var seq    = this,
         i      = seq.start - 1,
         getter = function() { return i < seq.start ? null : (i < seq.end ? seq.items[i] : null); };
@@ -125,6 +174,10 @@ Closure.Sequence = Closure.Class.create({
     var seq = this.clone();
     seq.end = seq.start + n;
     return seq;
+  },
+
+  first: function() {
+    return this.take(1);
   },
 
   at: function(n) {

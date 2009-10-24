@@ -1,6 +1,32 @@
 load('test_helper.js');
 
 Riot.context('Sequence', function() {
+  /*given('an iterator', function() {
+    var iterator = new Closure.Iterator(function(x) { return x + 1; }),
+        seq      = new Closure.Sequence(iterator);
+
+    should('take take values', seq.take(5).toString()).equals('1,2,3,4,5');
+    //should('return the first value', seq.first().toString()).equals('1');
+    //should('take values then tail', seq.take(100).tail(1).toString()).equals('100');
+  });
+  */
+  given('an array iterator', function() {
+    var iterator = new Closure.Iterator([3, 6, 9, 12, 15]);
+    should('return expected values', iterator.next()).equals(3);
+    should('return expected value again', iterator.next()).equals(6);
+  });
+
+  given('a function iterator', function() {
+    var iterator = new Closure.Iterator(function(x) { return x + 1; });
+    should('iterate once with next', iterator.next()).equals(1);
+    should('iterate again with next', iterator.next()).equals(2);
+  });
+
+  given('a sequence that uses an iterator', function() {
+    var seq = new Closure.Sequence(function(x, i) { return i * 2; });
+    should('take values from the sequence', seq.take(3).toString()).equals('0,2,4');
+  });
+
   given('an array', function() {
     var a      = [1, 2, 3, 4, 5],
         seq    = new Closure.Sequence(a),
