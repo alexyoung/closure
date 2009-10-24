@@ -2,8 +2,12 @@ load('test_helper.js');
 
 Riot.context('Sequence', function() {
   given('an array', function() {
-    var a   = [1, 2, 3, 4, 5],
-        seq = new Closure.Sequence(a);
+    var a      = [1, 2, 3, 4, 5],
+        seq    = new Closure.Sequence(a),
+        mapped = 0;
+
+    should('fetch value at n', seq.at(3)).equals(4);
+    should('execute map until the at() value is found', seq.map(function(v) { mapped++; return v; }).at(3)).equals(4);
 
     should('loop with each', function() {
       var b = null

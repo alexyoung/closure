@@ -117,20 +117,21 @@ Closure.Sequence = Closure.Class.create({
 
   tail: function(n) {
     var seq = this.clone();
-    seq.addCallback(function(s) {
-      s.start = s.items.length - n;
-      return s;
-    });
+    seq.start = seq.items.length - n;
     return seq;
   },
 
   take: function(n) {
     var seq = this.clone();
-    seq.addCallback(function(s) {
-      s.end = s.start + n;
-      return s;
-    });
+    seq.end = seq.start + n;
     return seq;
+  },
+
+  at: function(n) {
+    var seq   = this.clone();
+    seq.start = n;
+    seq.end   = n + 1;
+    return seq.evaluate()[0];
   },
 
   contains: function(value) {
