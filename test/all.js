@@ -6,5 +6,6 @@ Riot.run = function(){};
 
 load('class_test.js');
 load('enumerable_test.js');
+load('sequence_test.js');
 
 runTests();

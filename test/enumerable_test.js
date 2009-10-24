@@ -4,7 +4,7 @@ Riot.context('Enumerable', function() {
   given('an array', function() {
     var a = [1, 2, 3, 4, 5];
 
-    should('collect items', Closure.Enumerable.collect(a, function(n) {
+    should('collect array', Closure.Enumerable.collect(a, function(n) {
       return n + 1;
     }).toString()).equals('2,3,4,5,6');
 
@@ -13,6 +13,9 @@ Riot.context('Enumerable', function() {
       Closure.Enumerable.each(a, function(n) { b = n; });
       return b;
     }).equals(5);
+
+    should('tail array', Closure.Enumerable.tail(a, 2).toString()).equals('4,5');
+    should('take n items', Closure.Enumerable.take(a, 2).toString()).equals('1,2');
   });
 
   given('a property list', function() {
