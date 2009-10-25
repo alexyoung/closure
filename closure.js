@@ -5,7 +5,7 @@ var Closure = {
   curry: function(fn) {
     var slice = Array.prototype.slice,
         args  = slice.apply(arguments, [1]);
-    return function () {
+    return function() {
       return fn.apply(null, args.concat(slice.apply(arguments)));
     };
   },
@@ -149,7 +149,7 @@ Closure.Sequence = Closure.Class.create({
 
   iterate: function() {
     if (this.iterator) {
-      return function () { return this.iterator.next() };
+      return function() { return this.iterator.next() };
     }
 
     var seq    = this,
